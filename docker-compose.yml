@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: challenge_1_db
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: challenge_1
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: ./api
+    container_name: challenge_1_api
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    volumes:
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
+    command: >
+      sh -lc "npx prisma generate && npx prisma migrate dev --name init && npm run dev"
+
+volumes:
+  postgres_data:
