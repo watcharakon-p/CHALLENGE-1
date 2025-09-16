@@ -6,6 +6,7 @@ import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 import { devSeed } from "./routes/dev.seed.route";
 import { sseHandler } from "./rt/sse";
+import { usersRoute } from "./routes/user.route";
 
 export function createServer() {
   const app = express();
@@ -21,8 +22,11 @@ export function createServer() {
     max: Number(process.env.RATE_LIMIT_MAX || 200),
   });
 
+  app.use('/api/users', limiter);
+
   app.get("/rt/sse", sseHandler);
   app.use(devSeed);
+  app.use(usersRoute);
 
 
   app.get("/health", (_req, res) => res.json({ ok: true }));
