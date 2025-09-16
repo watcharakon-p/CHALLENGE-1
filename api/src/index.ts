@@ -1,12 +1,13 @@
-import express, { Express, Request, Response } from "express";
+import { createServer } from "./server";
+import { WebSocketServer } from "ws";
+import { attachWss } from "./rt/ws";
 
-const app: Express = express();
+const port = Number(process.env.PORT || 3001);
+const app = createServer();
+const server = app.listen(port, () =>
+  console.log(`[api] http://localhost:${port}`)
+);
 
-app.get("/", (req: Request, res: Response) => {
-    res.send("Hello World!");
-});
+const wss = new WebSocketServer({ server, path: "/rt/ws" });
 
-app.listen(3001, () => {
-    console.log("Server is running on port 3001");
-});
-    
+attachWss(wss);
