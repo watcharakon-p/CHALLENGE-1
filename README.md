@@ -1,4 +1,4 @@
-# Challenge 1 — Full‑Stack App (API + Web)
+# Challenge 1 — DATA PROCESSING & RENDERING (50,000+ records)
 
 This repository contains a small full‑stack application with:
 
