@@ -7,10 +7,11 @@ import { nextSort } from "@/lib/sort";
 import { fetchUsers } from "@/lib/api-client";
 import DataTable from "@/components/DataTable";
 import Pagination from "@/components/Pagination";
+import TextField from "@/components/TextField";
 
 export default function Home() {
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize] = useState(10);
   const [sortBy, setSortBy] = useState<SortBy>("createdAt");
   const [sortDir, setSortDir] = useState<SortDir>("asc");
   const [search, setSearch] = useState("");
@@ -60,10 +61,10 @@ export default function Home() {
 
   const body = useMemo(() => {
 
-    if(loading) return <div>Loading...</div>
-    if(error) return <div>Error: {error}</div>
+    if(loading) return <div className="py-10 text-center text-slate-500">Loading...</div>
+    if(error) return <div className="py-10 text-center text-red-600">Error: {error}</div>
 
-    if(data.items.length === 0) return <div>No results.</div>
+    if(data.items.length === 0) return <div className="py-10 text-center text-slate-500">No results.</div>
 
     return (
       <DataTable
@@ -76,34 +77,43 @@ export default function Home() {
   }, [loading,error,data, sortBy, sortDir,onSort]);
 
   return (
-    <div>
-      <h1>Challenge 1</h1>
-      <div>
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            setPage(1);
-          }}
-          placeholder="Search..."
-        />
+    <div className="space-y-6">
+      <section className="rounded-xl border bg-white shadow-sm">
+        <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between border-b">
+          <div className="space-y-1">
+            <h2 className="text-lg font-semibold tracking-tight">Users</h2>
+            <p className="text-sm text-slate-500">Browse, search, and sort user records.</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <TextField
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+              placeholder="Search users by name or email..."
+              className="w-64"
+            />
+            <span className="inline-flex items-center rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">
+              Total: {data.total.toLocaleString()}
+            </span>
+          </div>
+        </div>
 
-        <span>
-          Total : {data.total.toLocaleString()}
-        </span>
-      </div>
-      
-      {body}
+        <div className="p-2 sm:p-3">
+          {body}
+        </div>
 
-      <div className="mt-4">
-        <Pagination
-          page={page}
-          total={data.total}
-          pageSize={pageSize}
-          onPage={(p) => setPage(p)}
-        />
-      </div>
+        <div className="flex items-center justify-between gap-4 border-t px-4 py-3">
+          <div className="text-xs text-slate-500">Showing page {page}</div>
+          <Pagination
+            page={page}
+            total={data.total}
+            pageSize={pageSize}
+            onPage={(p) => setPage(p)}
+          />
+        </div>
+      </section>
     </div>
   );
 }

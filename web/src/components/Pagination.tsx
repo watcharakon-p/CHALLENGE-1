@@ -22,7 +22,7 @@ export default function Pagination({page,total,pageSize,onPage}: PaginationProps
     }, []);
     
     const btnClass = useMemo(() => {
-        return "px-2 py-1 rounded-md border border-gray-300 hover:bg-gray-100"
+        return "px-2 py-1 rounded-md border border-slate-300 bg-white text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-400/40 disabled:opacity-50 disabled:cursor-not-allowed"
     }, []);
 
 
@@ -30,7 +30,7 @@ export default function Pagination({page,total,pageSize,onPage}: PaginationProps
         <div className={rootClass}>
             <button className={btnClass} onClick={() => go(1)} disabled={page === 1}>First</button>
             <button className={btnClass} onClick={() => go(page - 1)} disabled={page === 1}>Prev</button>
-            <span className="px-2 py-1 ">Page {page} of {pages}</span>
+            <span className="px-2 py-1 text-slate-600">Page {page} of {pages}</span>
             <button className={btnClass} onClick={() => go(page + 1)} disabled={page === pages}>Next</button>
             <button className={btnClass} onClick={() => go(pages)} disabled={page === pages}>Last</button>
         </div>
