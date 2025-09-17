@@ -33,7 +33,7 @@ usersRoute.get("/api/users", async (req, res) => {
       case "createdAt":
         return Prisma.sql`u."createdAt"`;
       case "orderTotal":
-        return Prisma.sql`COALESCE(SUM(a.order_total), 0)`;
+        return Prisma.sql`COALESCE(a.order_total, 0)`;
       default:
         return Prisma.sql`u."createdAt"`;
     }
