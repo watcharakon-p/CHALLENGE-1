@@ -5,7 +5,6 @@ import compression from "compression";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 import { devSeed } from "./routes/dev.seed.route";
-import { sseHandler } from "./rt/sse";
 import { usersRoute } from "./routes/user.route";
 import { userOrderRouter } from "./routes/userOrder.route";
 
@@ -24,8 +23,6 @@ export function createServer() {
   });
 
   app.use('/api/users', limiter);
-
-  app.get("/rt/sse", sseHandler);
   app.use(devSeed);
   app.use(usersRoute);
   app.use(userOrderRouter); 

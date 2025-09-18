@@ -1,8 +1,6 @@
 import { Router } from "express";
 import { seedDatabase } from "../seed/seed-database";
 import { prisma } from "../db";
-import { sseBroadcast } from "../rt/sse";
-import { wsBroadcast } from "../rt/ws";
 
 export const devSeed = Router();
 
@@ -16,9 +14,9 @@ devSeed.post("/dev/seed", async (req, res) => {
   );
   const seed = Number(process.env.SEED_RNG ?? 1337);
 
-  const onProgress = (ev: string, data: any) => {
-    sseBroadcast(ev, data);
-    wsBroadcast(ev, data);
+  const onProgress = (_ev: string, _data: any) => {
+    // Realtime disabled: no-op progress handler
+    return;
   };
 
   await seedDatabase(prisma, { users, orders, products, seed }, onProgress);
