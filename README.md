@@ -18,7 +18,6 @@ This repository contains a small full‑stack application with:
 │  │  │  ├─ dev.seed.route.ts
 │  │  │  ├─ user.route.ts
 │  │  │  └─ userOrder.route.ts
-│  │  ├─ rt/               # Real‑time (SSE / WS)
 │  │  ├─ seed/             # Database seeding
 │  │  ├─ db.ts             # Prisma client
 │  │  └─ types.ts          # Shared API types
@@ -159,13 +158,6 @@ Base URL: `http://localhost:3001`
 - POST `/dev/seed`
   - Optional query params: `users`, `orders`, `products` (see Seeding Demo Data above)
   - Seeds the database and broadcasts progress over SSE/WS.
-
-### Real‑Time Endpoints
-
-- SSE: `GET /rt/sse`
-- WebSocket: `ws://localhost:3001/rt/ws`
-
-These broadcast progress events during seeding and can be extended for other real‑time features.
 
 ## Web App
 
